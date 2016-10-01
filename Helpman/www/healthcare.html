@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="css/index.css" rel="stylesheet" />
+    <style>
+        .addreview {
+            background-color: white;
+            width: 100%;
+           display:table;
+        }
+
+        .reviewcol1 {
+            width: 12%;
+            margin-left: 25%;
+            margin-top: 5%;
+            float: left;
+        }
+       .reviewcol2 {
+            width: 50%;
+            float: left;
+            color: mediumpurple;
+        }
+
+        .mainrev 
+        {
+            background-color: aliceblue;
+            margin-top:1%;
+          }
+
+        .divbut
+        {
+            width:15%;
+            margin-left:2%;
+            margin-top:1%;
+            height:25px;
+            background-color:#008080;
+             border-radius:4%;
+             padding-left:3%;
+             padding-top:2%;
+             color:white;
+             text-decoration:none;
+             float:left;
+             font-size:13pt;
+             border:1px solid gray;
+
+        }
+        .divbutouter {
+            width: 100%;
+        }
+        .sample
+        {
+            margin-top:10%;
+        }
+              .img-sty
+           {
+               margin-left:48%;
+           }
+    </style>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", getReview);
+        function getReview()
+        {
+            var oreq = new XMLHttpRequest();
+            oreq.onreadystatechange = function () {
+                if (oreq.readyState == 4)
+                {
+                    var table = JSON.parse(oreq.responseText);
+                    dvGuestAll.innerHTML = "";
+                                    
+                    for (var i = 0; i < table.length; i++)
+                    {
+                        var record = table[i];
+                        dvGuestAll.innerHTML += "<span style='color:darkred; font-size:14pt; font-weight:600'>" + record.daystotake + "</span><br />";
+
+                        dvGuestAll.innerHTML += "Medicine Name: " + "<i style='color:green; font-weight:600'>" + record.name + "</i><br />";
+                        dvGuestAll.innerHTML += "Description:"+"&nbsp"+"<span style='color:darkblue;font-weight:600'>" + record.reason + "</span><br>";
+                       
+                        dvGuestAll.innerHTML += "Timings: " + "<span style='color:darkblue; font-weight:600'>" + record.timings + "</span><br>";
+                        dvGuestAll.innerHTML += "<div class='divbutouter'>";
+                        dvGuestAll.innerHTML += "<div class='divbut'><a style='color:white;text-decoration:none;padding:2%' href='updatehealth.html?id=" + record.Id + "'>EDIT</a></div>";
+                        dvGuestAll.innerHTML += "<img class='img-sty' src='images/bin.png' onclick=doDelete('" + record.Id + "') />";
+                        // dvGuestAll.innerHTML += "<input class='btn-deletecolor' type='button' value='DELETE' onclick=doDelete('" + record.Id + "')>";
+                        dvGuestAll.innerHTML += "</div><br><hr>";
+                        /*if (record.daystotake == "Monday")
+                        {
+                            
+                            dvGuestAll.innerHTML += "Reviewed By: " + "<i style='color:green'>" + record.name + "</i><br />";
+                            dvGuestAll.innerHTML += "<span style='color:darkblue'>" + record.reason + "</span><br>";
+                            dvGuestAll.innerHTML += "Timings: " + "<span style='color:darkblue'>" + record.timings + "</span><br>";
+                            dvGuestAll.innerHTML += "<div class='divbutouter'>";
+                            dvGuestAll.innerHTML += "<div class='divbut'><a style='color:white;text-decoration:none;padding:2%' href='updatehealth.html?id=" + record.Id + "'>EDIT</a></div>";
+                            dvGuestAll.innerHTML += "<img class='img-sty' src='images/bin.png' onclick=doDelete('" + record.Id + "') />";
+                            // dvGuestAll.innerHTML += "<input class='btn-deletecolor' type='button' value='DELETE' onclick=doDelete('" + record.Id + "')>";
+                            dvGuestAll.innerHTML += "</div><br><hr>";
+                        }
+                        else if(record.daystotake == "Tuesday")
+                        {
+                           
+                            dvGuestAll1.innerHTML += "Reviewed By: " + "<i style='color:green'>" + record.name + "</i><br />";
+                            dvGuestAll1.innerHTML += "<span style='color:darkblue'>" + record.reason + "</span><br>";
+                            dvGuestAll1.innerHTML += "Timings: " + "<span style='color:darkblue'>" + record.timings + "</span><br>";
+                            dvGuestAll1.innerHTML += "<div class='divbutouter'>";
+                            dvGuestAll1.innerHTML += "<div class='divbut'><a style='color:white;text-decoration:none;padding:2%' href='updatehealth.html?id=" + record.Id + "'>EDIT</a></div>";
+                            dvGuestAll1.innerHTML += "<img class='img-sty' src='images/bin.png' onclick=doDelete('" + record.Id + "') />";
+                            //dvGuestAll1.innerHTML += "<input class='btn-deletecolor' type='button' value='DELETE' onclick=doDelete('" + record.Id + "')>";
+                            dvGuestAll1.innerHTML += "</div><br><hr>";
+                        }
+                        else if (record.daystotake == "Wednesday") {
+
+                            dvGuestAll2.innerHTML += "Reviewed By: " + "<i style='color:green'>" + record.name + "</i><br />";
+                            dvGuestAll2.innerHTML += "<span style='color:darkblue'>" + record.reason + "</span><br>";
+                            dvGuestAll2.innerHTML += "Timings: " + "<span style='color:darkblue'>" + record.timings + "</span><br>";
+                            dvGuestAll2.innerHTML += "<div class='divbutouter'>";
+                            dvGuestAll2.innerHTML += "<div class='divbut'><a style='color:white;text-decoration:none;padding:2%' href='updatehealth.html?id=" + record.Id + "'>EDIT</a></div>";
+                            dvGuestAll2.innerHTML += "<img class='img-sty' src='images/bin.png' onclick=doDelete('" + record.Id + "') />";
+                            //dvGuestAll2.innerHTML += "<input class='btn-deletecolor' type='button' value='DELETE' onclick=doDelete('" + record.Id + "')>";
+                            dvGuestAll2.innerHTML += "</div><br><hr>";
+                        }
+                        else if (record.daystotake == "Thursday") {
+
+                            dvGuestAll3.innerHTML += "Reviewed By: " + "<i style='color:green'>" + record.name + "</i><br />";
+                            dvGuestAll3.innerHTML += "<span style='color:darkblue'>" + record.reason + "</span><br>";
+                            dvGuestAll3.innerHTML += "Timings: " + "<span style='color:darkblue'>" + record.timings + "</span><br>";
+                            dvGuestAll3.innerHTML += "<div class='divbutouter'>";
+                            dvGuestAll3.innerHTML += "<div class='divbut'><a style='color:white;text-decoration:none;padding:2%' href='updatehealth.html?id=" + record.Id + "'>EDIT</a></div>";
+                            dvGuestAll3.innerHTML += "<img class='img-sty' src='images/bin.png' onclick=doDelete('" + record.Id + "') />";
+                            //dvGuestAll3.innerHTML += "<input class='btn-deletecolor' type='button' value='DELETE' onclick=doDelete('" + record.Id + "')>";
+                            dvGuestAll3.innerHTML += "</div><br><hr>";
+                        }
+                        else if (record.daystotake == "Friday") {
+
+                            dvGuestAll4.innerHTML += "Reviewed By: " + "<i style='color:green'>" + record.name + "</i><br />";
+                            dvGuestAll4.innerHTML += "<span style='color:darkblue'>" + record.reason + "</span><br>";
+                            dvGuestAll4.innerHTML += "Timings: " + "<span style='color:darkblue'>" + record.timings + "</span><br>";
+                            dvGuestAll4.innerHTML += "<div class='divbutouter'>";
+                            dvGuestAll4.innerHTML += "<div class='divbut'><a style='color:white;text-decoration:none;padding:2%' href='updatehealth.html?id=" + record.Id + "'>EDIT</a></div>";
+                            dvGuestAll4.innerHTML += "<img class='img-sty' src='images/bin.png' onclick=doDelete('" + record.Id + "') />";
+                            //dvGuestAll4.innerHTML += "<input class='btn-deletecolor' type='button' value='DELETE' onclick=doDelete('" + record.Id + "')>";
+                            dvGuestAll4.innerHTML += "</div><br><hr>";
+                        }
+                        else if (record.daystotake == "Saturday") {
+
+                            dvGuestAll5.innerHTML += "Reviewed By: " + "<i style='color:green'>" + record.name + "</i><br />";
+                            dvGuestAll5.innerHTML += "<span style='color:darkblue'>" + record.reason + "</span><br>";
+                            dvGuestAll5.innerHTML += "Timings: " + "<span style='color:darkblue'>" + record.timings + "</span><br>";
+                            dvGuestAll5.innerHTML += "<div class='divbutouter'>";
+                            dvGuestAll5.innerHTML += "<div class='divbut'><a style='color:white;text-decoration:none;padding:2%' href='updatehealth.html?id=" + record.Id + "'>EDIT</a></div>";
+                            dvGuestAll5.innerHTML += "<img class='img-sty' src='images/bin.png' onclick=doDelete('" + record.Id + "') />";
+                            //dvGuestAll5.innerHTML += "<input class='btn-deletecolor' type='button' value='DELETE' onclick=doDelete('" + record.Id + "')>";
+                            dvGuestAll5.innerHTML += "</div><br><hr>";
+                        }
+                        else if (record.daystotake == "Sunday")
+                        {
+
+                            dvGuestAll6.innerHTML += "Reviewed By: " + "<i style='color:green'>" + record.name + "</i><br />";
+                            dvGuestAll6.innerHTML += "<span style='color:darkblue'>" + record.reason + "</span><br>";
+                            dvGuestAll6.innerHTML += "Timings: " + "<span style='color:darkblue'>" + record.timings + "</span><br>";
+                            dvGuestAll6.innerHTML += "<div class='divbutouter'>";
+                            dvGuestAll6.innerHTML += "<div class='divbut'><a style='color:white;text-decoration:none;padding:2%' href='updatehealth.html?id=" + record.Id + "'>EDIT</a></div>";
+                            dvGuestAll6.innerHTML += "<img class='img-sty' src='images/bin.png' onclick=doDelete('" + record.Id + "') />";
+                            //dvGuestAll6.innerHTML += "<input class='btn-deletecolor' type='button' value='DELETE' onclick=doDelete('" + record.Id + "')>";
+                            dvGuestAll6.innerHTML += "</div><br><hr>";
+                        }*/
+                    
+                    }
+                }
+            }
+            oreq.open("GET",
+            "http://pomatino.com/health.svc/health/all", true);
+            oreq.send();
+        }
+        function doDelete(selectedID) {
+            //alert("You want to delete:" + selectedID);
+            var oreq = new XMLHttpRequest();
+            oreq.onreadystatechange = function () {
+                if (oreq.readyState == 4) {
+                    var table = JSON.parse(oreq.responseText);
+                    location.href = "healthcare.html";
+                }
+            }
+            oreq.open("GET", "http://pomatino.com/health.svc/health/" + selectedID + "/delete", true);
+            oreq.send();
+        }
+    </script>
+</head>
+<body>
+    <div class="head-play">
+        <div class="ins-col1"><a href="index.html"><img src="images/home.png" /></a></div>
+        <div class="ins-col2"><span style="margin-left:20%">LIST TO DO</span></div><br /><br />
+    </div>
+    <div class="sample"></div>
+    <div class="addreview" style="margin-bottom:2%">
+        <a href="addhealthcare.html">
+            <div class="reviewcol1"><img src="images/add.png" /></div>
+            <div class="reviewcol2"><h2>Add To List</h2></div>
+        </a>    
+    </div>
+
+          
+    <div class="mainrev">
+        <div id="dvGuestAll"></div>
+    </div>
+  
+    <div style="margin-bottom:30%"></div>
+    
+    <div class="footer">
+        <ul class="navbar1">
+            <li style="width:20%;margin-left:-6%"><a class="anchor" href="household.html"><img style="width:50%;" src="images/houseicon.png" /><br /><span style="margin-left:-20%" class="color">Household</span></a></li>
+            <li style="width:30%;margin-left:4%"><a class="anchor" href="healthcare.html"><img style="width:32%;padding-left:18%;" src="images/healthicon.png" /><br /><span style="margin-left:10%" class="color">Health</span></a></li>
+            <li style="width:20%"><a href="insertnotify.html"><img style="width:50%;padding-left:10%" src="images/travelicon.png" /><br /><span class="color">Travel</span></a></li>
+            <li style="width:20%"><a href="login.html"><img style="width:50%;margin-left:30%" src="images/loginicon.png" /> <span style="color:black; margin-top:-10%;margin-left:26%">Login</span></a></li>
+        </ul>
+    </div>
+</body>
+</html>

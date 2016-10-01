@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="css/index.css" rel="stylesheet" />
+    <script>
+        function insertRecord()
+        {
+            //alert("In Insert Record");
+            var postdata = "custname=" + encodeURIComponent(txName.value) + "&"
+            + "custemailid=" + encodeURIComponent(txEmail.value) + "&"
+            + "custnum=" + encodeURIComponent(txNum.value) + "&" + "&";
+            var oreq = new XMLHttpRequest();
+            oreq.onreadystatechange = function ()
+            {
+                if (oreq.readyState == 4)
+                {
+
+                    r = JSON.parse(oreq.responseText);
+                    location.href = "updatenotify.html";
+                }
+            }
+            oreq.open("POST", "http://pomatino.com/notify.svc/notification", true);
+            oreq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            oreq.send(postdata);
+        }
+    </script>
+</head>
+<body>
+    <div class="head-guest">
+        <div class="ins-col1"><a href="index.html"><img src="images/back.png" /></a></div>
+        <div class="ins-col2"><span align="middle">NOTIFY ME</span>
+            <a class="anchor" href="updatenotify.html"><span style="color:white;margin-left:27%">View</span></a></div><br /><br />
+    </div>
+    <img src="images/coming2.png" />
+    <div class="label">
+        <div style="background-color:rgb(180, 83, 183);display:block;height:40px;margin-top:-9%;border-radius:3%;">
+            <h2 style="color:white; padding:4% 3%">Enter your details here!!</h2>
+        </div>
+        <div class="label-color">
+            <label for="txName">Name:</label><br /><input placeholder="Your Name" class="input-style" type="text" id="txName" />
+            <label for="txEmail">Emailid:</label><br /><input placeholder="john@example.com" class="input-style" type="text" id="txEmail" />
+            <label for="txNum">Contact Number:</label><br /><input placeholder="Contact Number" class="input-style" type="text" id="txNum" />
+            <input style="margin-top:6%" class="btn-color" type="button" value="Insert Record" onclick="insertRecord()" /><br />
+            <a style="padding-left:10%" href="index.html">Go to Home Page</a>
+        </div>
+    </div>
+    <div class="footer">
+        <ul class="navbar1">
+            <li style="width:20%;margin-left:-6%"><a class="anchor" href="household.html"><img style="width:50%;" src="images/houseicon.png" /><br /><span style="margin-left:-20%" class="color">Household</span></a></li>
+            <li style="width:30%;margin-left:4%"><a class="anchor" href="healthcare.html"><img style="width:32%;padding-left:18%;" src="images/healthicon.png" /><br /><span style="margin-left:10%" class="color">Health</span></a></li>
+            <li style="width:20%"><a href="insertnotify.html"><img style="width:50%;padding-left:10%" src="images/travelicon.png" /><br /><span class="color">Travel</span></a></li>
+            <li style="width:20%"><a href="login.html"><img style="width:50%;margin-left:30%" src="images/loginicon.png" /> <span style="color:black; margin-top:-10%;margin-left:26%">Login</span></a></li>
+        </ul>
+    </div>
+</body>
+</html>

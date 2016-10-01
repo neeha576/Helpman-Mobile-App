@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="css/index.css" rel="stylesheet" />
+    <style>
+                
+        .divbut
+        {
+            width:15%;
+            margin-left:2%;
+            margin-top:1%;
+            height:25px;
+            background-color:#008080;
+             border-radius:4%;
+             padding-left:3%;
+             padding-top:2%;
+             color:white;
+             text-decoration:none;
+             float:left;
+             font-size:13pt;
+             border:1px solid gray;
+
+        }
+        .divbutouter
+        {
+            width:100%;
+        }
+              .img-sty
+           {
+               margin-left:48%;
+           }
+           .fon
+           {
+               font-size:14pt;
+               padding-left:2%;
+             
+           }
+           .con1{
+               width:20%;
+               float:left;
+           }
+            .con2{
+               width:60%;
+               float:left;
+               margin-left:-10%;
+               margin-top:2%;
+           }
+            .clear
+            {
+                clear:both;
+            }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", getBook);
+        function getBook()
+        {
+            var oreq = new XMLHttpRequest();
+            oreq.onreadystatechange = function () {
+                if (oreq.readyState == 4)
+                {
+                    var table = JSON.parse(oreq.responseText);
+                    dvGuestAll.innerHTML = ""; // clear first
+                    for (var i = 0; i < table.length; i++)
+                    {
+                        var record = table[i];
+                        dvGuestAll.innerHTML += "<div class='fon'>";
+                        dvGuestAll.innerHTML += "<table style='width:100%;'><tr><td style='width:67%;'><span style='color:green;font-weight:600; font-size:15pt'><b>" + record.name + "</b></span></td>" + "<td style='width:33%;'><span style='color:brown;font-weight:600'>" + record.date + "</span></td></tr></table>";
+                        dvGuestAll.innerHTML += "<span style='font-weight:600;color:darkred'>Address:</span> <br>" + "<span style='color:purple'>" + record.address + "</span><br />";
+                        dvGuestAll.innerHTML += "<span style='color:purple'>" + record.city + ", </span>";
+                        dvGuestAll.innerHTML += "<span style='color:purple'>" + record.state + ", </span>";
+                        dvGuestAll.innerHTML += "<span style='color:purple'>" + record.zip + "</span><br />";
+                        dvGuestAll.innerHTML += "<div class='con1'><img src='images/con1.png' /></div>" + "<div class='con2'><span style='color:#3C1773;font-weight:600'>" + record.contact + "</span></div><br />";
+                        //dvGuestAll.innerHTML += "Booked on: " + "<span style='color:brown'>" + record.date + "</span><br />";
+                        dvGuestAll.innerHTML += "<div class='clear'>";
+                        dvGuestAll.innerHTML += "<div class='divbut'><a style='color:white;text-decoration:none;padding:2%' href='updatebookone.html?id=" + record.Id + "'>EDIT</a></div>";
+                        dvGuestAll.innerHTML += "<img class='img-sty' src='images/bin.png' onclick=doDelete('" + record.Id + "') />";
+                        // dvGuestAll.innerHTML += "<input class='btn-deletecolor' type='button' value='DELETE' onclick=doDelete('" + record.Id + "')>";
+                        dvGuestAll.innerHTML += "<br><hr>";
+                    }
+                }
+            }
+            oreq.open("GET",
+            "http://pomatino.com/book.svc/book/all", true);
+            oreq.send();
+        }
+        function doDelete(selectedID) {
+            //alert("You want to delete:" + selectedID);
+            var oreq = new XMLHttpRequest();
+            oreq.onreadystatechange = function () {
+                if (oreq.readyState == 4) {
+                    var table = JSON.parse(oreq.responseText);
+                    location.href = "updatebook.html";
+                }
+            }
+            oreq.open("GET", "http://pomatino.com/book.svc/book/" + selectedID + "/delete", true);
+            oreq.send();
+        }
+    </script>
+</head>
+<body>
+    <div class="head-guest">
+        <div class="ins-col1"><a href="electrician.html"><img src="images/back.png" /></a></div>
+        <div class="ins-col2"><span align="middle">Your Profile</span></div><br /><br />
+    </div>
+    <div id="dvGuestAll" style="margin:1% 1% 30% 1%;background-color:honeydew"></div>
+    <div class="footer">
+        <ul class="navbar">
+            <li style="width:20%;margin-left:-6%"><a class="anchor" href="household.html"><img style="width:30px;" src="images/houseicon.png" /><br /><span style="margin-left:-20%" class="color">Household</span></a></li>
+            <li style="width:30%;margin-left:4%"><a class="anchor" href="healthcare.html"><img style="width:30px;padding-left:18%;" src="images/healthicon.png" /><br /><span style="margin-left:10%" class="color">Health</span></a></li>
+            <li style="width:20%"><a href="insertnotify.html"><img style="width:30px;padding-left:10%" src="images/travelicon.png" /><br /><span class="color">Travel</span></a></li>
+            <li style="width:20%"><a href="login.html"><img style="width:30px;padding-left:20%" src="images/loginicon.png" /><br /><span class="color">Login</span></a></li>
+        </ul>
+    </div>
+</body>
+</html>

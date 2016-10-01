@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="css/index.css" rel="stylesheet" />
+    <script>
+        document.addEventListener("DOMContentLoaded", getBook);
+        function getBook()
+        {
+            var oreq = new XMLHttpRequest();
+            oreq.onreadystatechange = function () {
+                if (oreq.readyState == 4)
+                {
+                    var table = JSON.parse(oreq.responseText);
+                    dvGuestAll.innerHTML = ""; // clear first
+                    for (var i = 0; i < table.length; i++)
+                    {
+                        var record = table[i];
+                        dvGuestAll.innerHTML += "<b style='color:red'>" + record.Id + "</b><br />";
+                        dvGuestAll.innerHTML += "Name: " + "<i style='color:green'>" + record.name + "</i><br />";
+                        dvGuestAll.innerHTML += "Address: <br>" + "<span style='color:purple'>" + record.address + "</span><br />";
+                        dvGuestAll.innerHTML += "<span style='color:darkblue'>" + record.city + ", </span>";
+                        dvGuestAll.innerHTML += "<span style='color:darkblue'>"  + record.state + ", </span>";
+                        dvGuestAll.innerHTML += "<span style='color:darkblue'>" + record.zip + "</span><br />";
+                        dvGuestAll.innerHTML += "Contact: " + "<span style='color:darkred'>" + record.contact + "</span><br />";
+                        dvGuestAll.innerHTML += "Booked on: " + "<span style='color:brown'>" + record.date + "</span><br />"; dvGuestAll.innerHTML += "<hr />";
+                    }
+                }
+            }
+            oreq.open("GET",
+            "http://pomatino.com/book.svc/book/all", true);
+            oreq.send();
+        }
+    </script>
+</head>
+<body>
+    <div class="head-guest">
+        <div class="ins-col1"><a href="electrician.html"><img src="images/back.png" /></a></div>
+        <div class="ins-col2"><span align="middle">Your Profile</span></div><br /><br />
+    </div>
+    <div id="dvGuestAll" style="margin-bottom:30%"></div>
+    <div class="footer">
+        <ul class="navbar">
+            <li style="width:20%;margin-left:-6%"><a class="anchor" href="household.html"><img style="width:30px;" src="images/houseicon.png" /><br /><span style="margin-left:-20%" class="color">Household</span></a></li>
+            <li style="width:30%;margin-left:4%"><a class="anchor" href="healthcare.html"><img style="width:30px;padding-left:18%;" src="images/healthicon.png" /><br /><span style="margin-left:10%" class="color">Health</span></a></li>
+            <li style="width:20%"><a href="insertnotify.html"><img style="width:30px;padding-left:10%" src="images/travelicon.png" /><br /><span class="color">Travel</span></a></li>
+            <li style="width:20%"><a href="login.html"><img style="width:30px;padding-left:20%" src="images/loginicon.png" /><br /><span class="color">Login</span></a></li>
+        </ul>
+    </div>
+</body>
+</html>

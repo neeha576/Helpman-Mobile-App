@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="css/index.css" rel="stylesheet"/> 
+    <style>
+        .addreview
+        {
+            background-color:white;
+            width:100%;
+            margin-top:10%;
+            height:50px;
+        }
+        .reviewcol1
+        {
+            width:20%;
+            margin-left:14%;
+            margin-top:3%;
+            float:left;
+        }
+        .reviewcol2
+        {
+            width:50%;
+            float:left;
+            color:mediumpurple;
+        }
+        .mainrev
+        {
+            background-color:aliceblue;
+            margin:1%;
+      
+        }
+         
+        .divbut
+        {
+            width:15%;
+            margin-left:2%;
+            margin-top:1%;
+            height:25px;
+            background-color:#008080;
+             border-radius:4%;
+             padding-left:3%;
+             padding-top:2%;
+             color:white;
+             text-decoration:none;
+             float:left;
+             font-size:13pt;
+             border:1px solid gray;
+
+        }
+        .divbutouter
+        {
+            width:100%;
+        }
+         .lbl
+         {
+             color:forestgreen;
+             font-size:15pt;
+             font-weight:600;
+         }
+          .span-sty
+         {
+             color:indigo;
+             font-size:12pt;
+             font-weight:600
+         }
+           .span-style1
+         {
+             
+             font-size:12pt;
+             font-weight:600
+         }
+           .img-sty
+           {
+               margin-left:48%;
+           }
+           .fon
+           {
+               font-size:15pt;
+             
+           }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", getReview);
+        function getReview()
+        {
+            var oreq = new XMLHttpRequest();
+            oreq.onreadystatechange = function () {
+                if (oreq.readyState == 4)
+                {
+                    var table = JSON.parse(oreq.responseText);
+                    dvGuestAll.innerHTML = ""; // clear first
+                    for (var i = 0; i < table.length; i++)
+                    {
+                        var record = table[i];
+                        dvGuestAll.innerHTML +=  "<div class='fon'>";
+                        dvGuestAll.innerHTML += "<table style='width:100%;'><tr><td style='width:70%'><span style='color:darkblue'>Reviewed By:<b> " + record.name + "</b></span></td><td style=width:30%><span style='margin-right:10%;color:brown;font-weight:600'>" + record.date + "</span></td></tr></table>";
+                        dvGuestAll.innerHTML += "<span class='lbl'>" + "\"" + record.title + "\"</span><br>";
+                        //dvGuestAll.innerHTML += "<table style='width:100%;'><tr><td><span class='span-sty'>" + record.type + "</span></td><td><b>Visited on:</b> <span class='span-sty'>" + record.time + "</span></td></tr></table><br>";
+                        dvGuestAll.innerHTML += "Service requested:"+ '&nbsp' +"<span style='color:darkred;font-weight:600'>" + record.type + "</span><br>";
+                        
+                        dvGuestAll.innerHTML += "<span style='color:darkblue; font-weight:600; margin-left:10%'>" + record.review + "</span><br />";
+                        dvGuestAll.innerHTML += "Rating: " + "<span style='color:darkred;font-weight:600'>" + record.rate + "</span><br />";
+                        dvGuestAll.innerHTML += "Visited on: " + "<span style='color:indigo;font-weight:600'>" + record.time + "</span><br>";
+                        //dvGuestAll.innerHTML += "<div class='divbutouter'>";
+                        '<br>'
+                        dvGuestAll.innerHTML += "<div class='divbut'><a style='color:white;text-decoration:none;padding:2%' href='updatereview.html?id=" + record.Id + "'>EDIT</a></div>";
+                        dvGuestAll.innerHTML += "<img class='img-sty' src='images/bin.png' onclick=doDelete('" + record.Id + "') />";
+                        // dvGuestAll.innerHTML += "<input class='btn-deletecolor' type='button' value='DELETE' onclick=doDelete('" + record.Id + "')>";
+                        dvGuestAll.innerHTML += "</div><br><hr>";
+                    }   
+                }
+            }
+            oreq.open("GET",
+            "http://pomatino.com/review.svc/review/all", true);
+            oreq.send();
+        }
+        function doDelete(selectedID) {
+            //alert("You want to delete:" + selectedID);
+            var oreq = new XMLHttpRequest();
+            oreq.onreadystatechange = function () {
+                if (oreq.readyState == 4) {
+                    var table = JSON.parse(oreq.responseText);
+                    location.href = "reviews.html";
+                }
+            }
+            oreq.open("GET", "http://pomatino.com/review.svc/review/" + selectedID + "/delete", true);
+            oreq.send();
+        }
+    </script>
+</head>
+<body>
+    <div class="head-play">
+        <div class="ins-col1"><a href="household.html"><img src="images/back.png" /></a></div>
+        <div class="ins-col2"><span style="margin-left:20%">Reviews</span></div><br /><br />
+    </div>
+    <div class="addreview">
+        <a href="addreview.html">
+          <div class="reviewcol1"><img src="images/add.png" /></div>
+          <div class="reviewcol2"><h2>Write a Review</h2></div>
+        </a>
+    </div>
+    <div class="mainrev">
+
+        <div id="dvGuestAll" style="margin-bottom:30%"></div>
+    </div>
+    
+    <div class="footer">
+        <ul class="navbar1">
+            <li style="width:20%;margin-left:-6%"><a class="anchor" href="household.html"><img style="width:50%;" src="images/houseicon.png" /><br /><span style="margin-left:-20%" class="color">Household</span></a></li>
+            <li style="width:30%;margin-left:4%"><a class="anchor" href="healthcare.html"><img style="width:32%;padding-left:18%;" src="images/healthicon.png" /><br /><span style="margin-left:10%" class="color">Health</span></a></li>
+            <li style="width:20%"><a href="insertnotify.html"><img style="width:50%;padding-left:10%" src="images/travelicon.png" /><br /><span class="color">Travel</span></a></li>
+            <li style="width:20%"><a href="login.html"><img style="width:50%;margin-left:30%" src="images/loginicon.png" /> <span style="color:black; margin-top:-10%;margin-left:26%">Login</span></a></li>
+        </ul>
+    </div>
+</body>
+</html>
